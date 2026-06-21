@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>هدى عبد العظيم | Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root { --ink: #1a1a2e; --gold: #c9a84c; --gold-light: #e8c97a; --white: #ffffff; --radius: 12px; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Cairo', sans-serif; background: var(--ink); color: var(--white); overflow-x: hidden; }
+  body.en { font-family: 'Inter', sans-serif; }
+
+  /* LANG TOGGLE */
+  .lang-toggle {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 100px; padding: 6px 14px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .lang-toggle:hover { background: rgba(201,168,76,0.2); }
+  .lang-toggle span { font-size: 0.85rem; font-weight: 700; color: var(--gold); }
+  .lang-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
+
   nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; background: rgba(26,26,46,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
   .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--gold); }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
   .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
   .nav-links a:hover { color: var(--gold); }
+
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%); }
   .hero-content { max-width: 700px; position: relative; z-index: 1; }
@@ -22,26 +37,31 @@
   .hero-name span { color: var(--gold); }
   .hero-title { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 40px; }
   .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn-primary { padding: 14px 32px; background: var(--gold); color: var(--ink); font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.95rem; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary { padding: 14px 32px; background: var(--gold); color: var(--ink); font-family: inherit; font-weight: 700; font-size: 0.95rem; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .btn-outline { padding: 14px 32px; background: transparent; color: var(--white); font-family: 'Cairo', sans-serif; font-weight: 600; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.25); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .btn-outline { padding: 14px 32px; background: transparent; color: var(--white); font-family: inherit; font-weight: 600; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.25); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
   .stats-bar { background: rgba(201,168,76,0.05); border-top: 1px solid rgba(201,168,76,0.12); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 32px 48px; display: flex; justify-content: center; gap: 64px; flex-wrap: wrap; }
   .stat { text-align: center; }
   .stat-num { font-size: 2rem; font-weight: 900; color: var(--gold); }
   .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
   section { padding: 96px 48px; }
   .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
   .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; margin-bottom: 48px; line-height: 1.2; }
   .section-title span { color: var(--gold); }
+
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
   .about-text { font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.9; }
   .about-text p { margin-bottom: 20px; }
   .skills-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .skill-tag { padding: 10px 16px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; font-size: 0.85rem; color: rgba(255,255,255,0.8); text-align: center; }
+
   .portfolio-filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-  .filter-btn { padding: 8px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); border-radius: 100px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+  .filter-btn { padding: 8px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); border-radius: 100px; font-family: inherit; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
   .filter-btn.active, .filter-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); font-weight: 700; }
+
   .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
   .portfolio-card { border-radius: var(--radius); overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: transform 0.25s, border-color 0.25s; }
   .portfolio-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.35); }
@@ -53,11 +73,13 @@
   .card-cat { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
   .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
   .card-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
   .art-section { background: rgba(10,8,20,0.6); }
   .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); cursor: pointer; }
   .play-btn { width: 56px; height: 56px; background: rgba(201,168,76,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+
   .exp-list { display: flex; flex-direction: column; gap: 32px; }
-  .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 32px; align-items: start; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .exp-item { display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: start; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .exp-item:last-child { border-bottom: none; }
   .exp-years { font-size: 0.8rem; color: var(--gold); font-weight: 600; padding-top: 4px; }
   .exp-role { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
@@ -65,6 +87,9 @@
   .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .exp-bullets li { font-size: 0.9rem; color: rgba(255,255,255,0.65); padding-right: 20px; position: relative; line-height: 1.6; }
   .exp-bullets li::before { content: '—'; position: absolute; right: 0; color: var(--gold); font-weight: 700; }
+  body.en .exp-bullets li { padding-right: 0; padding-left: 20px; }
+  body.en .exp-bullets li::before { right: auto; left: 0; }
+
   .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .tech-card { padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); transition: border-color 0.2s; }
   .tech-card:hover { border-color: rgba(201,168,76,0.3); }
@@ -75,15 +100,23 @@
   .tech-tag { padding: 4px 10px; border-radius: 4px; background: rgba(201,168,76,0.1); font-size: 0.75rem; color: var(--gold); }
   .tech-link { display: inline-block; margin-top: 12px; font-size: 0.82rem; color: var(--gold); text-decoration: none; font-weight: 600; }
   .tech-link:hover { text-decoration: underline; }
+
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
   .contact-intro { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.9; }
   .contact-links { display: flex; flex-direction: column; gap: 16px; }
   .contact-link { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; text-decoration: none; color: var(--white); transition: border-color 0.2s, transform 0.15s; }
   .contact-link:hover { border-color: var(--gold); transform: translateX(-4px); }
+  body.en .contact-link:hover { transform: translateX(4px); }
   .contact-link-icon { font-size: 1.2rem; }
   .contact-link-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
   .contact-link-val { font-size: 0.9rem; font-weight: 600; }
+
   footer { text-align: center; padding: 32px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: rgba(255,255,255,0.25); }
+
+  /* LTR overrides for English */
+  body.en { direction: ltr; text-align: left; }
+  body.en nav { direction: ltr; }
+
   @media (max-width: 768px) {
     nav { padding: 16px 24px; } .nav-links { display: none; }
     .hero { padding: 100px 24px 60px; } section { padding: 64px 24px; }
@@ -96,230 +129,319 @@
 <body>
 
 <nav>
-  <div class="nav-logo">هدى عبد العظيم</div>
+  <div class="nav-logo" data-ar="هدى عبد العظيم" data-en="Huda Abduladeem">هدى عبد العظيم</div>
   <ul class="nav-links">
-    <li><a href="#about">عني</a></li>
-    <li><a href="#portfolio">الأعمال</a></li>
-    <li><a href="#art">فنون روحانية</a></li>
-    <li><a href="#video">فيديوهات</a></li>
-    <li><a href="#experience">الخبرة</a></li>
-    <li><a href="#projects">المشاريع</a></li>
-    <li><a href="#contact">تواصل</a></li>
+    <li><a href="#about" data-ar="عني" data-en="About">عني</a></li>
+    <li><a href="#portfolio" data-ar="الأعمال" data-en="Works">الأعمال</a></li>
+    <li><a href="#art" data-ar="فنون روحانية" data-en="Spiritual Art">فنون روحانية</a></li>
+    <li><a href="#video" data-ar="فيديوهات" data-en="Videos">فيديوهات</a></li>
+    <li><a href="#experience" data-ar="الخبرة" data-en="Experience">الخبرة</a></li>
+    <li><a href="#projects" data-ar="المشاريع" data-en="Projects">المشاريع</a></li>
+    <li><a href="#contact" data-ar="تواصل" data-en="Contact">تواصل</a></li>
+    <li>
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">
+        <div class="lang-dot"></div>
+        <span id="lang-label">EN</span>
+      </button>
+    </li>
   </ul>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-eyebrow">مهندسة حاسوب · مخططة مشاريع · مصممة</div>
-    <h1 class="hero-name">هدى<br><span>عبد العظيم</span></h1>
-    <p class="hero-title">أكثر من ٢٠ عاماً من الخبرة في التخطيط الاستراتيجي وإدارة المشاريع ومراقبة الوثائق، مقترنة بإبداع بصري متقدم في التصميم الغرافيكي والفن الرقمي والإنتاج المرئي.</p>
+    <div class="hero-eyebrow" data-ar="مهندسة حاسوب · مخططة مشاريع · مصممة" data-en="Computer Engineer · Project Planner · Designer">مهندسة حاسوب · مخططة مشاريع · مصممة</div>
+    <h1 class="hero-name" data-ar="هدى<br><span>عبد العظيم</span>" data-en="Huda<br><span>Abduladeem</span>">هدى<br><span>عبد العظيم</span></h1>
+    <p class="hero-title" data-ar="أكثر من ٢٠ عاماً من الخبرة في التخطيط الاستراتيجي وإدارة المشاريع ومراقبة الوثائق، مقترنة بإبداع بصري متقدم في التصميم الغرافيكي والفن الرقمي والإنتاج المرئي." data-en="20+ years of experience in strategic planning, project management, and document control, combined with advanced visual creativity in graphic design, digital art, and video production.">أكثر من ٢٠ عاماً من الخبرة في التخطيط الاستراتيجي وإدارة المشاريع ومراقبة الوثائق، مقترنة بإبداع بصري متقدم في التصميم الغرافيكي والفن الرقمي والإنتاج المرئي.</p>
     <div class="hero-cta">
-      <a href="#portfolio" class="btn-primary">معرض الأعمال</a>
-      <a href="#contact" class="btn-outline">تواصل معي</a>
+      <a href="#portfolio" class="btn-primary" data-ar="معرض الأعمال" data-en="View Portfolio">معرض الأعمال</a>
+      <a href="#contact" class="btn-outline" data-ar="تواصل معي" data-en="Contact Me">تواصل معي</a>
     </div>
   </div>
 </section>
 
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num">+٢٠</div><div class="stat-label">سنة خبرة</div></div>
-  <div class="stat"><div class="stat-num">٣</div><div class="stat-label">مناصب قيادية</div></div>
-  <div class="stat"><div class="stat-num">٢</div><div class="stat-label">مشاريع تقنية منشورة</div></div>
-  <div class="stat"><div class="stat-num">+٢٠</div><div class="stat-label">عمل إبداعي</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label" data-ar="سنة خبرة" data-en="Years Experience">سنة خبرة</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label" data-ar="مناصب قيادية" data-en="Leadership Roles">مناصب قيادية</div></div>
+  <div class="stat"><div class="stat-num">2</div><div class="stat-label" data-ar="مشاريع تقنية منشورة" data-en="Published Tech Projects">مشاريع تقنية منشورة</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label" data-ar="عمل إبداعي" data-en="Creative Works">عمل إبداعي</div></div>
 </div>
 
 <section id="about">
-  <div class="section-label">من أنا</div>
-  <h2 class="section-title">الخبرة التي <span>تجمع الدقة والإبداع</span></h2>
+  <div class="section-label" data-ar="من أنا" data-en="About Me">من أنا</div>
+  <h2 class="section-title" data-ar="الخبرة التي <span>تجمع الدقة والإبداع</span>" data-en="Experience that <span>blends precision & creativity</span>">الخبرة التي <span>تجمع الدقة والإبداع</span></h2>
   <div class="about-grid">
     <div class="about-text">
-      <p>مهندسة حاسوب بخلفية تقنية متعمقة وخبرة ميدانية في مشاريع البنية التحتية الحكومية. عملت رئيسةً لقسم التخطيط ثم رئيسةً لشعبة تقنية المعلومات في مديرية مشروع ماء البصرة (البدعة)، حيث أشرفت على جدولة المشاريع بـ Primavera P6 وإدارة منظومة الوثائق المركزية.</p>
-      <p>حاصلة على دبلوم عالٍ في إدارة الجودة من جامعة البصرة، وشهادة مدربة معتمدة من البورد الأوروبي للتدريب والقيادة (المملكة المتحدة). مطورة تطبيقات ويب Full-Stack بـ React وNode.js، ومصممة غرافيك وفنانة رقمية.</p>
+      <p data-ar="مهندسة حاسوب بخلفية تقنية متعمقة وخبرة ميدانية في مشاريع البنية التحتية الحكومية. عملت رئيسةً لقسم التخطيط ثم رئيسةً لشعبة تقنية المعلومات في مديرية مشروع ماء البصرة (البدعة)، حيث أشرفت على جدولة المشاريع بـ Primavera P6 وإدارة منظومة الوثائق المركزية." data-en="Computer Engineer with a deep technical background and hands-on experience in government infrastructure projects. Served as Head of Planning Department and Head of IT Division at Basra Water Project Directorate (Al-Bid'a), overseeing project scheduling with Primavera P6 and managing the central document control system.">مهندسة حاسوب بخلفية تقنية متعمقة وخبرة ميدانية في مشاريع البنية التحتية الحكومية. عملت رئيسةً لقسم التخطيط ثم رئيسةً لشعبة تقنية المعلومات في مديرية مشروع ماء البصرة (البدعة)، حيث أشرفت على جدولة المشاريع بـ Primavera P6 وإدارة منظومة الوثائق المركزية.</p>
+      <p data-ar="حاصلة على دبلوم عالٍ في إدارة الجودة من جامعة البصرة، وشهادة مدربة معتمدة من البورد الأوروبي للتدريب والقيادة (المملكة المتحدة). مطورة تطبيقات ويب Full-Stack بـ React وNode.js، ومصممة غرافيك وفنانة رقمية." data-en="Holds a Higher Diploma in Quality Management from the University of Basra, and a Professional Certified Trainer credential from the European Board of Training and Leadership Development (UK). Full-Stack web developer using React and Node.js, graphic designer, and digital artist.">حاصلة على دبلوم عالٍ في إدارة الجودة من جامعة البصرة، وشهادة مدربة معتمدة من البورد الأوروبي للتدريب والقيادة (المملكة المتحدة). مطورة تطبيقات ويب Full-Stack بـ React وNode.js، ومصممة غرافيك وفنانة رقمية.</p>
     </div>
     <div class="skills-list">
-      <div class="skill-tag">Primavera P6</div><div class="skill-tag">مراقبة الوثائق DCC</div>
-      <div class="skill-tag">AutoCAD</div><div class="skill-tag">إدارة الجودة ISO</div>
-      <div class="skill-tag">Adobe Photoshop</div><div class="skill-tag">Adobe Illustrator</div>
-      <div class="skill-tag">Adobe Premiere</div><div class="skill-tag">CapCut</div>
-      <div class="skill-tag">React 19 / Node.js</div><div class="skill-tag">فن رقمي بالذكاء الاصطناعي</div>
-      <div class="skill-tag">إنتاج مرئي</div><div class="skill-tag">تدريب وتأهيل</div>
+      <div class="skill-tag">Primavera P6</div>
+      <div class="skill-tag" data-ar="مراقبة الوثائق DCC" data-en="Document Control DCC">مراقبة الوثائق DCC</div>
+      <div class="skill-tag">AutoCAD</div>
+      <div class="skill-tag" data-ar="إدارة الجودة ISO" data-en="ISO Quality Management">إدارة الجودة ISO</div>
+      <div class="skill-tag">Adobe Photoshop</div>
+      <div class="skill-tag">Adobe Illustrator</div>
+      <div class="skill-tag">Adobe Premiere</div>
+      <div class="skill-tag">CapCut</div>
+      <div class="skill-tag">React 19 / Node.js</div>
+      <div class="skill-tag" data-ar="فن رقمي بالذكاء الاصطناعي" data-en="AI Digital Art">فن رقمي بالذكاء الاصطناعي</div>
+      <div class="skill-tag" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+      <div class="skill-tag" data-ar="تدريب وتأهيل" data-en="Training & Development">تدريب وتأهيل</div>
     </div>
   </div>
 </section>
 
 <section id="portfolio" style="background:rgba(0,0,0,0.2);">
-  <div class="section-label">معرض الأعمال</div>
-  <h2 class="section-title">تصاميم <span>إعلانية وهوية بصرية</span></h2>
+  <div class="section-label" data-ar="معرض الأعمال" data-en="Portfolio">معرض الأعمال</div>
+  <h2 class="section-title" data-ar="تصاميم <span>إعلانية وهوية بصرية</span>" data-en="<span>Advertising & Brand</span> Designs">تصاميم <span>إعلانية وهوية بصرية</span></h2>
   <div class="portfolio-filters">
-    <button class="filter-btn active" onclick="filterCards('all',this)">الكل</button>
-    <button class="filter-btn" onclick="filterCards('identity',this)">هوية بصرية</button>
-    <button class="filter-btn" onclick="filterCards('design',this)">تصاميم إعلانية</button>
-    <button class="filter-btn" onclick="filterCards('training',this)">تدريب مهني</button>
+    <button class="filter-btn active" onclick="filterCards('all',this)" data-ar="الكل" data-en="All">الكل</button>
+    <button class="filter-btn" onclick="filterCards('identity',this)" data-ar="هوية بصرية" data-en="Brand Identity">هوية بصرية</button>
+    <button class="filter-btn" onclick="filterCards('design',this)" data-ar="تصاميم إعلانية" data-en="Ad Designs">تصاميم إعلانية</button>
+    <button class="filter-btn" onclick="filterCards('training',this)" data-ar="تدريب مهني" data-en="Training">تدريب مهني</button>
   </div>
   <div class="portfolio-grid">
     <div class="portfolio-card" data-cat="identity">
-      <div class="card-thumb"><img src="assets/identity/logo-sweet-huda.jpeg" alt="شعار Sweet Huda"></div>
-      <div class="card-body"><div class="card-cat">هوية بصرية</div><div class="card-title">شعار Sweet Huda</div><div class="card-desc">هوية بصرية احترافية لعلامة حلويات مصنوعة يدوياً.</div></div>
+      <div class="card-thumb"><img src="assets/identity/logo-sweet-huda.jpeg" alt="Sweet Huda Logo"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="هوية بصرية" data-en="Brand Identity">هوية بصرية</div>
+        <div class="card-title" data-ar="شعار Sweet Huda" data-en="Sweet Huda Logo">شعار Sweet Huda</div>
+        <div class="card-desc" data-ar="هوية بصرية احترافية لعلامة حلويات مصنوعة يدوياً." data-en="Professional brand identity for a homemade sweets brand.">هوية بصرية احترافية لعلامة حلويات مصنوعة يدوياً.</div>
+      </div>
     </div>
     <div class="portfolio-card" data-cat="design">
-      <div class="card-thumb portrait"><img src="assets/design/poster-cupcake.jpeg" alt="كب كيك"></div>
-      <div class="card-body"><div class="card-cat">تصميم إعلاني</div><div class="card-title">Sweet Huda — كب كيك الشوكولاتة</div><div class="card-desc">بوستر ترويجي احترافي مع تكامل الهوية البصرية للعلامة.</div></div>
+      <div class="card-thumb portrait"><img src="assets/design/poster-cupcake.jpeg" alt="Cupcake Poster"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="تصميم إعلاني" data-en="Ad Design">تصميم إعلاني</div>
+        <div class="card-title">Sweet Huda — Chocolate Cupcake</div>
+        <div class="card-desc" data-ar="بوستر ترويجي احترافي مع تكامل الهوية البصرية للعلامة." data-en="Professional promotional poster with full brand identity integration.">بوستر ترويجي احترافي مع تكامل الهوية البصرية للعلامة.</div>
+      </div>
     </div>
     <div class="portfolio-card" data-cat="design">
-      <div class="card-thumb portrait"><img src="assets/design/poster-oyoun-water.jpeg" alt="مياه عيون"></div>
-      <div class="card-body"><div class="card-cat">تصميم إعلاني</div><div class="card-title">مياه عيون — من قلب البصرة</div><div class="card-desc">بوستر إعلاني بجودة احترافية عالية مع توظيف الذكاء الاصطناعي.</div></div>
+      <div class="card-thumb portrait"><img src="assets/design/poster-oyoun-water.jpeg" alt="Oyoun Water"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="تصميم إعلاني" data-en="Ad Design">تصميم إعلاني</div>
+        <div class="card-title" data-ar="مياه عيون — من قلب البصرة" data-en="Oyoun Water — From the Heart of Basra">مياه عيون — من قلب البصرة</div>
+        <div class="card-desc" data-ar="بوستر إعلاني بجودة احترافية عالية مع توظيف الذكاء الاصطناعي." data-en="High-quality advertising poster with AI-generated visuals.">بوستر إعلاني بجودة احترافية عالية مع توظيف الذكاء الاصطناعي.</div>
+      </div>
     </div>
     <div class="portfolio-card" data-cat="design">
       <div class="card-thumb portrait"><img src="assets/design/poster-hawa-baghdad.jpeg" alt="Hawa Baghdad"></div>
-      <div class="card-body"><div class="card-cat">تصميم إعلاني فاخر</div><div class="card-title">Hawa Baghdad — Eau de Parfum</div><div class="card-desc">إعلان عطر فاخر بأسلوب سينمائي يجمع الهوية العراقية والجماليات الرفيعة.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="تصميم إعلاني فاخر" data-en="Luxury Ad Design">تصميم إعلاني فاخر</div>
+        <div class="card-title">Hawa Baghdad — Eau de Parfum</div>
+        <div class="card-desc" data-ar="إعلان عطر فاخر بأسلوب سينمائي يجمع الهوية العراقية والجماليات الرفيعة." data-en="Luxury perfume ad with a cinematic style blending Iraqi identity and high aesthetics.">إعلان عطر فاخر بأسلوب سينمائي يجمع الهوية العراقية والجماليات الرفيعة.</div>
+      </div>
     </div>
     <div class="portfolio-card" data-cat="training">
       <div class="card-thumb"><img src="assets/training/project-management.jpg" alt="Project Management"></div>
-      <div class="card-body"><div class="card-cat">تدريب مهني</div><div class="card-title">Project Management — Primavera P6</div><div class="card-desc">غلاف دورة إدارة المشاريع باستخدام Primavera بإشراف المهندسة هدى.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="تدريب مهني" data-en="Professional Training">تدريب مهني</div>
+        <div class="card-title">Project Management — Primavera P6</div>
+        <div class="card-desc" data-ar="غلاف دورة إدارة المشاريع باستخدام Primavera بإشراف المهندسة هدى." data-en="Course cover for Project Management using Primavera P6, supervised by Eng. Huda.">غلاف دورة إدارة المشاريع باستخدام Primavera بإشراف المهندسة هدى.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="art" class="art-section">
-  <div class="section-label">فنون روحانية ورقمية</div>
-  <h2 class="section-title">تصاميم <span>تلامس الروح</span></h2>
+  <div class="section-label" data-ar="فنون روحانية ورقمية" data-en="Spiritual & Digital Art">فنون روحانية ورقمية</div>
+  <h2 class="section-title" data-ar="تصاميم <span>تلامس الروح</span>" data-en="Designs that <span>touch the soul</span>">تصاميم <span>تلامس الروح</span></h2>
   <div class="portfolio-grid">
     <div class="portfolio-card">
-      <div class="card-thumb portrait"><img src="assets/art/art-night-fajr.png" alt="بين الليل والفجر"></div>
-      <div class="card-body"><div class="card-cat">فن رقمي روحاني</div><div class="card-title">بين الليل والفجر... تُولدُ المعجزات</div><div class="card-desc">تصميم فني بالذكاء الاصطناعي — مشهد فجر روحاني.</div></div>
+      <div class="card-thumb portrait"><img src="assets/art/art-night-fajr.png" alt="Between Night and Fajr"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن رقمي روحاني" data-en="Spiritual Digital Art">فن رقمي روحاني</div>
+        <div class="card-title" data-ar="بين الليل والفجر... تُولدُ المعجزات" data-en="Between Night and Dawn... Miracles are Born">بين الليل والفجر... تُولدُ المعجزات</div>
+        <div class="card-desc" data-ar="تصميم فني بالذكاء الاصطناعي — مشهد فجر روحاني." data-en="AI-generated spiritual artwork — a dawn scene with Islamic architecture.">تصميم فني بالذكاء الاصطناعي — مشهد فجر روحاني.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb portrait"><img src="assets/art/art-quran-aqsa.png" alt="المسجد الأقصى"></div>
-      <div class="card-body"><div class="card-cat">فن قرآني</div><div class="card-title">سبحان الذي أسرى — المسجد الأقصى</div><div class="card-desc">تصميم يجمع آيتين قرآنيتين مع مشهد بصري للأقصى المبارك.</div></div>
+      <div class="card-thumb portrait"><img src="assets/art/art-quran-aqsa.png" alt="Al-Aqsa"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن قرآني" data-en="Quranic Art">فن قرآني</div>
+        <div class="card-title" data-ar="سبحان الذي أسرى — المسجد الأقصى" data-en="Glory to He Who Took His Servant — Al-Aqsa">سبحان الذي أسرى — المسجد الأقصى</div>
+        <div class="card-desc" data-ar="تصميم يجمع آيتين قرآنيتين مع مشهد بصري للأقصى المبارك." data-en="Design combining two Quranic verses with a visual of the blessed Al-Aqsa Mosque.">تصميم يجمع آيتين قرآنيتين مع مشهد بصري للأقصى المبارك.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-rizq-paradise.jpeg" alt="يأتيها رزقها"></div>
-      <div class="card-body"><div class="card-cat">فن إسلامي</div><div class="card-title">يأتيها رزقها من كل مكان</div><div class="card-desc">مشهد جنة إسلامية بأسلوب رسوم مائية رقمية احترافية.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-rizq-paradise.jpeg" alt="Paradise"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن إسلامي" data-en="Islamic Art">فن إسلامي</div>
+        <div class="card-title" data-ar="يأتيها رزقها من كل مكان" data-en="Her Provision Comes from Every Direction">يأتيها رزقها من كل مكان</div>
+        <div class="card-desc" data-ar="مشهد جنة إسلامية بأسلوب رسوم مائية رقمية احترافية." data-en="Islamic paradise scene in professional digital watercolor style.">مشهد جنة إسلامية بأسلوب رسوم مائية رقمية احترافية.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-biayunina.jpeg" alt="إنك بأعيننا"></div>
-      <div class="card-body"><div class="card-cat">فن قرآني</div><div class="card-title">إنك بأعيننا</div><div class="card-desc">تصميم خط عربي ذهبي مع مشهد قارب وحمامات وشروق شمس.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-biayunina.jpeg" alt="Biayunina"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن قرآني" data-en="Quranic Art">فن قرآني</div>
+        <div class="card-title" data-ar="إنك بأعيننا" data-en="Indeed You Are Under Our Eyes">إنك بأعيننا</div>
+        <div class="card-desc" data-ar="تصميم خط عربي ذهبي مع مشهد قارب وحمامات وشروق شمس." data-en="Golden Arabic calligraphy with a boat scene, doves, and sunrise.">تصميم خط عربي ذهبي مع مشهد قارب وحمامات وشروق شمس.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb portrait"><img src="assets/art/rt-coffee-cup.jpeg" alt="فنجان القهوة"></div>
-      <div class="card-body"><div class="card-cat">فن رقمي إبداعي</div><div class="card-title">Between the lines of coffee... stories are born</div><div class="card-desc">تصميم سينمائي داخل فنجان قهوة — دمج الواقع بالخيال.</div></div>
+      <div class="card-thumb portrait"><img src="assets/art/rt-coffee-cup.jpeg" alt="Coffee Cup"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن رقمي إبداعي" data-en="Creative Digital Art">فن رقمي إبداعي</div>
+        <div class="card-title">Between the lines of coffee... stories are born</div>
+        <div class="card-desc" data-ar="تصميم سينمائي داخل فنجان قهوة — دمج الواقع بالخيال." data-en="Cinematic design inside a coffee cup — blending reality with imagination.">تصميم سينمائي داخل فنجان قهوة — دمج الواقع بالخيال.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-coffee-cup-2.jpg" alt="شعاع نور"></div>
-      <div class="card-body"><div class="card-cat">فن رقمي إبداعي</div><div class="card-title">أحياناً كل ما تحتاج إليه هو شعاع نور</div><div class="card-desc">تصميم داخل فنجان قهوة حقيقي — فتاة في شعاع ضوء وسط الغيوم.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-coffee-cup-2.jpg" alt="Ray of Light"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن رقمي إبداعي" data-en="Creative Digital Art">فن رقمي إبداعي</div>
+        <div class="card-title" data-ar="أحياناً كل ما تحتاج إليه هو شعاع نور" data-en="Sometimes All You Need Is a Ray of Light">أحياناً كل ما تحتاج إليه هو شعاع نور</div>
+        <div class="card-desc" data-ar="تصميم داخل فنجان قهوة حقيقي — فتاة في شعاع ضوء وسط الغيوم." data-en="Design inside a real coffee cup — a girl sitting in a ray of light among clouds.">تصميم داخل فنجان قهوة حقيقي — فتاة في شعاع ضوء وسط الغيوم.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-return-plant.jpeg" alt="إن الله على رجعه لقادر"></div>
-      <div class="card-body"><div class="card-cat">فن تحفيزي</div><div class="card-title">إن الله على رجعه لقادر</div><div class="card-desc">تصميم يجمع الآية الكريمة مع نبتة تنبت من أرض متشققة.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-return-plant.jpeg" alt="Return Plant"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن تحفيزي" data-en="Motivational Art">فن تحفيزي</div>
+        <div class="card-title" data-ar="إن الله على رجعه لقادر" data-en="Indeed Allah is Able to Bring Him Back">إن الله على رجعه لقادر</div>
+        <div class="card-desc" data-ar="تصميم يجمع الآية الكريمة مع نبتة تنبت من أرض متشققة." data-en="Design combining the Quranic verse with a plant sprouting from cracked earth.">تصميم يجمع الآية الكريمة مع نبتة تنبت من أرض متشققة.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-stairway.jpeg" alt="درجات نحو النور"></div>
-      <div class="card-body"><div class="card-cat">فن رقمي روحاني</div><div class="card-title">درجات نحو النور</div><div class="card-desc">تصميم روحاني يصور رحلة الصعود نحو الضوء فوق الغيوم.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-stairway.jpeg" alt="Stairway to Light"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن رقمي روحاني" data-en="Spiritual Digital Art">فن رقمي روحاني</div>
+        <div class="card-title" data-ar="درجات نحو النور" data-en="Steps Toward the Light">درجات نحو النور</div>
+        <div class="card-desc" data-ar="تصميم روحاني يصور رحلة الصعود نحو الضوء فوق الغيوم." data-en="Spiritual design depicting the journey of ascent toward light above the clouds.">تصميم روحاني يصور رحلة الصعود نحو الضوء فوق الغيوم.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-dove-peace.jpeg" alt="حمامة السلام"></div>
-      <div class="card-body"><div class="card-cat">فن رقمي</div><div class="card-title">حمامة السلام</div><div class="card-desc">تصميم رقمي احترافي لحمامة بيضاء تحلق نحو النور.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-dove-peace.jpeg" alt="Dove of Peace"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="فن رقمي" data-en="Digital Art">فن رقمي</div>
+        <div class="card-title" data-ar="حمامة السلام" data-en="Dove of Peace">حمامة السلام</div>
+        <div class="card-desc" data-ar="تصميم رقمي احترافي لحمامة بيضاء تحلق نحو النور." data-en="Professional digital design of a white dove soaring toward the light.">تصميم رقمي احترافي لحمامة بيضاء تحلق نحو النور.</div>
+      </div>
     </div>
     <div class="portfolio-card">
-      <div class="card-thumb"><img src="assets/art/art-kids-studio.jpeg" alt="ورشة فنية"></div>
-      <div class="card-body"><div class="card-cat">توثيق فعاليات</div><div class="card-title">ورشة فنية للأطفال</div><div class="card-desc">توثيق مصور لورشة رسم وفنون للأطفال في مرسم متخصص.</div></div>
+      <div class="card-thumb"><img src="assets/art/art-kids-studio.jpeg" alt="Kids Art Workshop"></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="توثيق فعاليات" data-en="Event Documentation">توثيق فعاليات</div>
+        <div class="card-title" data-ar="ورشة فنية للأطفال" data-en="Children's Art Workshop">ورشة فنية للأطفال</div>
+        <div class="card-desc" data-ar="توثيق مصور لورشة رسم وفنون للأطفال في مرسم متخصص." data-en="Photo documentation of a children's drawing and arts workshop in a specialized studio.">توثيق مصور لورشة رسم وفنون للأطفال في مرسم متخصص.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="video" style="background:rgba(0,0,0,0.25);">
-  <div class="section-label">إنتاج مرئي</div>
-  <h2 class="section-title">فيديوهات <span>ترويجية</span> منتقاة</h2>
+  <div class="section-label" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+  <h2 class="section-title" data-ar="فيديوهات <span>ترويجية</span> منتقاة" data-en="Selected <span>Promotional</span> Videos">فيديوهات <span>ترويجية</span> منتقاة</h2>
   <div class="portfolio-grid">
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://youtu.be/a610QhdANp4','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-alsaei-thumb.jpg" alt="مدرسة الساعي">
+        <img src="assets/video/thumbs/video-alsaei-thumb.jpg" alt="Al-Saei School">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">إعلان مدرسة الساعي الدولية</div><div class="card-desc">فيديو تعريفي ترويجي لمدرسة ذات معايير دولية.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="إعلان مدرسة الساعي الدولية" data-en="Al-Saei International School Ad">إعلان مدرسة الساعي الدولية</div>
+        <div class="card-desc" data-ar="فيديو تعريفي ترويجي لمدرسة ذات معايير دولية." data-en="Promotional video for an internationally-standardized school.">فيديو تعريفي ترويجي لمدرسة ذات معايير دولية.</div>
+      </div>
     </div>
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://youtu.be/F_Mt31l-rMA','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-cupcake-thumb.jpg" alt="كب كيك">
+        <img src="assets/video/thumbs/video-cupcake-thumb.jpg" alt="Sweet Huda Cupcake">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">إعلان Sweet Huda — كب كيك</div><div class="card-desc">فيديو ترويجي لمنتج حلويات مصنوعة يدوياً.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="إعلان Sweet Huda — كب كيك" data-en="Sweet Huda Cupcake Ad">إعلان Sweet Huda — كب كيك</div>
+        <div class="card-desc" data-ar="فيديو ترويجي لمنتج حلويات مصنوعة يدوياً." data-en="Promotional video for a homemade sweets product.">فيديو ترويجي لمنتج حلويات مصنوعة يدوياً.</div>
+      </div>
     </div>
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://youtu.be/oYANzqUozVU','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-rhodia-thumb.jpg" alt="عيادة Rhodia">
+        <img src="assets/video/thumbs/video-rhodia-thumb.jpg" alt="Rhodia Clinic">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">إعلان عيادة Rhodia</div><div class="card-desc">فيديو ترويجي احترافي لعيادة طبية.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="إعلان عيادة Rhodia" data-en="Rhodia Clinic Ad">إعلان عيادة Rhodia</div>
+        <div class="card-desc" data-ar="فيديو ترويجي احترافي لعيادة طبية." data-en="Professional promotional video for a medical clinic.">فيديو ترويجي احترافي لعيادة طبية.</div>
+      </div>
     </div>
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://youtube.com/shorts/4qI4eWcs44g','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-oyoun-water-thumb.jpg" alt="مياه عيون">
+        <img src="assets/video/thumbs/video-oyoun-water-thumb.jpg" alt="Oyoun Water">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">إعلان مياه عيون</div><div class="card-desc">حملة فيديو ترويجية لمياه عيون من قلب البصرة.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="إعلان مياه عيون" data-en="Oyoun Water Ad">إعلان مياه عيون</div>
+        <div class="card-desc" data-ar="حملة فيديو ترويجية لمياه عيون من قلب البصرة." data-en="Promotional video campaign for Oyoun Water from the heart of Basra.">حملة فيديو ترويجية لمياه عيون من قلب البصرة.</div>
+      </div>
     </div>
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://youtube.com/shorts/2hM6KeEMQYw','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-hawa-thumb.jpg" alt="هوى بغداد">
+        <img src="assets/video/thumbs/video-hawa-thumb.jpg" alt="Hawa Baghdad">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">إعلان Hawa Baghdad — عطر فاخر</div><div class="card-desc">فيديو ترويجي بأسلوب سينمائي لعطر هوى بغداد.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="إعلان Hawa Baghdad — عطر فاخر" data-en="Hawa Baghdad Luxury Perfume Ad">إعلان Hawa Baghdad — عطر فاخر</div>
+        <div class="card-desc" data-ar="فيديو ترويجي بأسلوب سينمائي لعطر هوى بغداد." data-en="Cinematic promotional video for Hawa Baghdad perfume.">فيديو ترويجي بأسلوب سينمائي لعطر هوى بغداد.</div>
+      </div>
     </div>
-
     <div class="portfolio-card">
       <div class="card-thumb" onclick="window.open('https://drive.google.com/file/d/1ETYRrD8rpK-LOKdHOk61ezz2j82O0pTF/view','_blank')" style="cursor:pointer;">
-        <img src="assets/video/thumbs/video-kids-thumb.jpg" alt="شكراً" onerror="this.style.background='rgba(201,168,76,0.1)'">
+        <img src="assets/video/thumbs/video-kids-thumb.jpg" alt="Kids Video" onerror="this.style.background='rgba(201,168,76,0.1)'">
         <div class="play-overlay"><div class="play-btn">▶</div></div>
       </div>
-      <div class="card-body"><div class="card-cat">إنتاج مرئي</div><div class="card-title">فيديو الأطفال — شكراً</div><div class="card-desc">فيديو موسيقي للأطفال على أغنية شكراً.</div></div>
+      <div class="card-body">
+        <div class="card-cat" data-ar="إنتاج مرئي" data-en="Video Production">إنتاج مرئي</div>
+        <div class="card-title" data-ar="فيديو الأطفال — شكراً" data-en="Children's Video — Thank You">فيديو الأطفال — شكراً</div>
+        <div class="card-desc" data-ar="فيديو موسيقي للأطفال على أغنية شكراً." data-en="Children's music video set to the song Thank You.">فيديو موسيقي للأطفال على أغنية شكراً.</div>
+      </div>
     </div>
-
   </div>
 </section>
 
 <section id="experience">
-  <div class="section-label">المسيرة المهنية</div>
-  <h2 class="section-title">خبرة تراكمية في <span>البنية التحتية</span></h2>
+  <div class="section-label" data-ar="المسيرة المهنية" data-en="Career">المسيرة المهنية</div>
+  <h2 class="section-title" data-ar="خبرة تراكمية في <span>البنية التحتية</span>" data-en="Cumulative expertise in <span>Infrastructure</span>">خبرة تراكمية في <span>البنية التحتية</span></h2>
   <div class="exp-list">
     <div class="exp-item">
-      <div class="exp-years">٢٠٢٠ – حتى الآن</div>
+      <div class="exp-years">2020 – Present</div>
       <div>
-        <div class="exp-role">رئيسة شعبة تقنية المعلومات</div>
-        <div class="exp-org">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
+        <div class="exp-role" data-ar="رئيسة شعبة تقنية المعلومات" data-en="Head of IT Division">رئيسة شعبة تقنية المعلومات</div>
+        <div class="exp-org" data-ar="مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية" data-en="Basra Water Project Directorate (Al-Bid'a) · Ministry of Water Resources">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
         <ul class="exp-bullets">
-          <li>الإشراف على جميع عمليات تقنية المعلومات والبنية التحتية الرقمية</li>
-          <li>إدارة منظومة مراقبة الوثائق المركزية مع التحكم الدقيق في الإصدارات</li>
-          <li>تدريب والإشراف على موظفي تقنية المعلومات</li>
-          <li>إعداد التقارير الفنية والعروض التقديمية للإدارة العليا</li>
+          <li data-ar="الإشراف على جميع عمليات تقنية المعلومات والبنية التحتية الرقمية" data-en="Overseeing all IT operations and digital infrastructure">الإشراف على جميع عمليات تقنية المعلومات والبنية التحتية الرقمية</li>
+          <li data-ar="إدارة منظومة مراقبة الوثائق المركزية مع التحكم الدقيق في الإصدارات" data-en="Managing the central document control system with precise version control">إدارة منظومة مراقبة الوثائق المركزية مع التحكم الدقيق في الإصدارات</li>
+          <li data-ar="تدريب والإشراف على موظفي تقنية المعلومات" data-en="Training and supervising IT staff">تدريب والإشراف على موظفي تقنية المعلومات</li>
+          <li data-ar="إعداد التقارير الفنية والعروض التقديمية للإدارة العليا" data-en="Preparing technical reports and presentations for senior management">إعداد التقارير الفنية والعروض التقديمية للإدارة العليا</li>
         </ul>
       </div>
     </div>
     <div class="exp-item">
-      <div class="exp-years">٢٠١٦ – ٢٠٢٠</div>
+      <div class="exp-years">2016 – 2020</div>
       <div>
-        <div class="exp-role">رئيسة قسم التخطيط</div>
-        <div class="exp-org">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
+        <div class="exp-role" data-ar="رئيسة قسم التخطيط" data-en="Head of Planning Department">رئيسة قسم التخطيط</div>
+        <div class="exp-org" data-ar="مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية" data-en="Basra Water Project Directorate (Al-Bid'a) · Ministry of Water Resources">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
         <ul class="exp-bullets">
-          <li>جدولة المشاريع وتخطيطها بـ Primavera P6</li>
-          <li>مراجعة المخططات الفنية بـ AutoCAD</li>
-          <li>تتبع المعالم الرئيسية وإعداد تقارير مؤشرات الأداء</li>
-          <li>التنسيق بين الأقسام الهندسية والإدارية</li>
+          <li data-ar="جدولة المشاريع وتخطيطها بـ Primavera P6" data-en="Project scheduling and planning using Primavera P6">جدولة المشاريع وتخطيطها بـ Primavera P6</li>
+          <li data-ar="مراجعة المخططات الفنية بـ AutoCAD" data-en="Reviewing technical drawings using AutoCAD">مراجعة المخططات الفنية بـ AutoCAD</li>
+          <li data-ar="تتبع المعالم الرئيسية وإعداد تقارير مؤشرات الأداء" data-en="Tracking milestones and preparing KPI reports">تتبع المعالم الرئيسية وإعداد تقارير مؤشرات الأداء</li>
+          <li data-ar="التنسيق بين الأقسام الهندسية والإدارية" data-en="Coordinating between engineering and administrative departments">التنسيق بين الأقسام الهندسية والإدارية</li>
         </ul>
       </div>
     </div>
     <div class="exp-item">
-      <div class="exp-years">٢٠١٢ – ٢٠١٦</div>
+      <div class="exp-years">2012 – 2016</div>
       <div>
-        <div class="exp-role">رئيسة شعبة الإحصاء</div>
-        <div class="exp-org">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
+        <div class="exp-role" data-ar="رئيسة شعبة الإحصاء" data-en="Head of Statistics Division">رئيسة شعبة الإحصاء</div>
+        <div class="exp-org" data-ar="مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية" data-en="Basra Water Project Directorate (Al-Bid'a) · Ministry of Water Resources">مديرية مشروع ماء البصرة (البدعة) · وزارة الموارد المائية</div>
         <ul class="exp-bullets">
-          <li>جمع البيانات وتحليلها وإعداد التقارير الإحصائية</li>
-          <li>الحفاظ على سجلات منظمة وتوثيق كامل لجميع أنشطة القسم</li>
+          <li data-ar="جمع البيانات وتحليلها وإعداد التقارير الإحصائية" data-en="Collecting, analyzing data, and preparing statistical reports">جمع البيانات وتحليلها وإعداد التقارير الإحصائية</li>
+          <li data-ar="الحفاظ على سجلات منظمة وتوثيق كامل لجميع أنشطة القسم" data-en="Maintaining organized records and full documentation of all division activities">الحفاظ على سجلات منظمة وتوثيق كامل لجميع أنشطة القسم</li>
         </ul>
       </div>
     </div>
@@ -327,59 +449,92 @@
 </section>
 
 <section id="projects" style="background:rgba(0,0,0,0.15);">
-  <div class="section-label">المشاريع التقنية</div>
-  <h2 class="section-title">تطوير <span>Full‑Stack</span> بالعربية</h2>
+  <div class="section-label" data-ar="المشاريع التقنية" data-en="Tech Projects">المشاريع التقنية</div>
+  <h2 class="section-title" data-ar="تطوير <span>Full‑Stack</span> بالعربية" data-en="<span>Full‑Stack</span> Development in Arabic">تطوير <span>Full‑Stack</span> بالعربية</h2>
   <div class="tech-grid">
     <div class="tech-card">
       <div class="tech-card-icon">🎓</div>
-      <div class="tech-card-title">أكاديمية ارتقاء — Ertiqaa Academy</div>
-      <div class="tech-card-desc">منصة LMS عربية كاملة بثلاثة أدوار، ٦ بوابات دفع، مساعد AI، شهادات، RTL وضوء/ظلام.</div>
+      <div class="tech-card-title">Ertiqaa Academy — أكاديمية ارتقاء</div>
+      <div class="tech-card-desc" data-ar="منصة LMS عربية كاملة بثلاثة أدوار، ٦ بوابات دفع، مساعد AI، شهادات، RTL وضوء/ظلام." data-en="Full Arabic LMS platform with 3 roles, 6 payment gateways, AI assistant, certificates, RTL and dark/light mode.">منصة LMS عربية كاملة بثلاثة أدوار، ٦ بوابات دفع، مساعد AI، شهادات، RTL وضوء/ظلام.</div>
       <div class="tech-tags"><span class="tech-tag">React 19</span><span class="tech-tag">Node.js</span><span class="tech-tag">Vercel</span><span class="tech-tag">Railway</span></div>
-      <a href="https://ertiqaa-academy.vercel.app" target="_blank" class="tech-link">← زيارة المنصة</a>
+      <a href="https://ertiqaa-academy.vercel.app" target="_blank" class="tech-link" data-ar="← زيارة المنصة" data-en="Visit Platform →">← زيارة المنصة</a>
     </div>
     <div class="tech-card">
       <div class="tech-card-icon">🏥</div>
-      <div class="tech-card-title">SIHATUNA IRAQ — نظام إدارة صحية</div>
-      <div class="tech-card-desc">نظام إدارة صحية متكامل بـ ١٤ صفحة، i18n عربي/إنجليزي، موارد بشرية وتشخيص بالذكاء الاصطناعي.</div>
+      <div class="tech-card-title">SIHATUNA IRAQ</div>
+      <div class="tech-card-desc" data-ar="نظام إدارة صحية متكامل بـ ١٤ صفحة، i18n عربي/إنجليزي، موارد بشرية وتشخيص بالذكاء الاصطناعي." data-en="Integrated healthcare management system with 14 pages, AR/EN i18n, HR module and AI diagnosis.">نظام إدارة صحية متكامل بـ ١٤ صفحة، i18n عربي/إنجليزي، موارد بشرية وتشخيص بالذكاء الاصطناعي.</div>
       <div class="tech-tags"><span class="tech-tag">React 19</span><span class="tech-tag">Express</span><span class="tech-tag">JWT</span><span class="tech-tag">i18n</span></div>
-      <a href="https://github.com/HudaElmuthefer/sihatuna-iraq" target="_blank" class="tech-link">← GitHub Repository</a>
+      <a href="https://github.com/HudaElmuthefer/sihatuna-iraq" target="_blank" class="tech-link" data-ar="← GitHub Repository" data-en="GitHub Repository →">← GitHub Repository</a>
     </div>
     <div class="tech-card">
       <div class="tech-card-icon">💧</div>
       <div class="tech-card-title">Water Quality Monitoring — E17</div>
-      <div class="tech-card-desc">بحث أكاديمي في مراقبة جودة مياه الفرات بـ MATLAB مقارنةً بمعايير WHO. مقدّم لـ AWC 2026 القاهرة.</div>
+      <div class="tech-card-desc" data-ar="بحث أكاديمي في مراقبة جودة مياه الفرات بـ MATLAB مقارنةً بمعايير WHO. مقدّم لـ AWC 2026 القاهرة." data-en="Academic research on Euphrates River water quality monitoring using MATLAB, benchmarked against WHO standards. Submitted to AWC 2026, Cairo.">بحث أكاديمي في مراقبة جودة مياه الفرات بـ MATLAB مقارنةً بمعايير WHO. مقدّم لـ AWC 2026 القاهرة.</div>
       <div class="tech-tags"><span class="tech-tag">MATLAB</span><span class="tech-tag">WHO Standards</span><span class="tech-tag">AWC 2026</span></div>
-      <a href="https://github.com/HudaElmuthefer/simulation-for-water-quality-ensurance" target="_blank" class="tech-link">← GitHub Repository</a>
+      <a href="https://github.com/HudaElmuthefer/simulation-for-water-quality-ensurance" target="_blank" class="tech-link" data-ar="← GitHub Repository" data-en="GitHub Repository →">← GitHub Repository</a>
     </div>
     <div class="tech-card">
       <div class="tech-card-icon">📚</div>
-      <div class="tech-card-title">كويزات تفاعلية — المنهج العراقي</div>
-      <div class="tech-card-desc">اختبارات تفاعلية للصف السادس الابتدائي بتنسيق وزارة التربية العراقية. تعمل offline.</div>
-      <div class="tech-tags"><span class="tech-tag">HTML/CSS/JS</span><span class="tech-tag">Offline</span><span class="tech-tag">منهج عراقي</span></div>
-      <a href="https://github.com/HudaElmuthefer" target="_blank" class="tech-link">← GitHub Profile</a>
+      <div class="tech-card-title" data-ar="كويزات تفاعلية — المنهج العراقي" data-en="Interactive Quizzes — Iraqi Curriculum">كويزات تفاعلية — المنهج العراقي</div>
+      <div class="tech-card-desc" data-ar="اختبارات تفاعلية للصف السادس الابتدائي بتنسيق وزارة التربية العراقية. تعمل offline." data-en="Interactive quizzes for 6th grade following Iraqi Ministry of Education format. Works fully offline.">اختبارات تفاعلية للصف السادس الابتدائي بتنسيق وزارة التربية العراقية. تعمل offline.</div>
+      <div class="tech-tags"><span class="tech-tag">HTML/CSS/JS</span><span class="tech-tag">Offline</span><span class="tech-tag" data-ar="منهج عراقي" data-en="Iraqi Curriculum">منهج عراقي</span></div>
+      <a href="https://github.com/HudaElmuthefer" target="_blank" class="tech-link" data-ar="← GitHub Profile" data-en="GitHub Profile →">← GitHub Profile</a>
     </div>
   </div>
 </section>
 
 <section id="contact" style="background:rgba(201,168,76,0.04);">
-  <div class="section-label">تواصل</div>
-  <h2 class="section-title">هل تبحث عن <span>كفاءة متعددة؟</span></h2>
+  <div class="section-label" data-ar="تواصل" data-en="Contact">تواصل</div>
+  <h2 class="section-title" data-ar="هل تبحث عن <span>كفاءة متعددة؟</span>" data-en="Looking for <span>multi-skilled expertise?</span>">هل تبحث عن <span>كفاءة متعددة؟</span></h2>
   <div class="contact-grid">
     <div class="contact-intro">
-      <p>أرحب بفرص العمل في قطاع النفط والغاز والقطاع الخاص في البصرة، سواء في أدوار مراقبة الوثائق DCC أو تخطيط المشاريع أو تقنية المعلومات. كما أقدم خدمات التصميم الغرافيكي والفن الرقمي والإنتاج المرئي.</p>
+      <p data-ar="أرحب بفرص العمل في قطاع النفط والغاز والقطاع الخاص في البصرة، سواء في أدوار مراقبة الوثائق DCC أو تخطيط المشاريع أو تقنية المعلومات. كما أقدم خدمات التصميم الغرافيكي والفن الرقمي والإنتاج المرئي." data-en="I welcome job opportunities in the oil & gas and private sectors in Basra, in roles such as Document Controller (DCC), Planning Engineer, or IT. I also offer graphic design, digital art, and video production services.">أرحب بفرص العمل في قطاع النفط والغاز والقطاع الخاص في البصرة، سواء في أدوار مراقبة الوثائق DCC أو تخطيط المشاريع أو تقنية المعلومات. كما أقدم خدمات التصميم الغرافيكي والفن الرقمي والإنتاج المرئي.</p>
     </div>
     <div class="contact-links">
-      <a href="mailto:halmuthefer@gmail.com" class="contact-link"><span class="contact-link-icon">✉</span><div><div class="contact-link-label">البريد الإلكتروني</div><div class="contact-link-val">halmuthefer@gmail.com</div></div></a>
-      <a href="tel:+9647714097770" class="contact-link"><span class="contact-link-icon">☎</span><div><div class="contact-link-label">الهاتف / واتساب</div><div class="contact-link-val">+964 771 409 7770</div></div></a>
+      <a href="mailto:halmuthefer@gmail.com" class="contact-link"><span class="contact-link-icon">✉</span><div><div class="contact-link-label" data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</div><div class="contact-link-val">halmuthefer@gmail.com</div></div></a>
+      <a href="tel:+9647714097770" class="contact-link"><span class="contact-link-icon">☎</span><div><div class="contact-link-label" data-ar="الهاتف / واتساب" data-en="Phone / WhatsApp">الهاتف / واتساب</div><div class="contact-link-val">+964 771 409 7770</div></div></a>
       <a href="https://linkedin.com/in/huda-elmuthefer" target="_blank" class="contact-link"><span class="contact-link-icon">🔗</span><div><div class="contact-link-label">LinkedIn</div><div class="contact-link-val">huda-elmuthefer</div></div></a>
       <a href="https://github.com/HudaElmuthefer" target="_blank" class="contact-link"><span class="contact-link-icon">⌥</span><div><div class="contact-link-label">GitHub</div><div class="contact-link-val">HudaElmuthefer</div></div></a>
     </div>
   </div>
 </section>
 
-<footer>© 2026 هدى عبد العظيم عبد الكريم · البصرة، العراق</footer>
+<footer>
+  <span data-ar="© 2026 هدى عبد العظيم عبد الكريم · البصرة، العراق" data-en="© 2026 Huda Abduladeem Abdulkareem · Basra, Iraq">© 2026 هدى عبد العظيم عبد الكريم · البصرة، العراق</span>
+</footer>
 
 <script>
+let currentLang = 'ar';
+
+function toggleLang() {
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  const html = document.getElementById('html-root');
+  const body = document.body;
+  const langLabel = document.getElementById('lang-label');
+
+  if (currentLang === 'en') {
+    html.setAttribute('lang', 'en');
+    html.setAttribute('dir', 'ltr');
+    body.classList.add('en');
+    langLabel.textContent = 'AR';
+  } else {
+    html.setAttribute('lang', 'ar');
+    html.setAttribute('dir', 'rtl');
+    body.classList.remove('en');
+    langLabel.textContent = 'EN';
+  }
+
+  // Update all translatable elements
+  document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+    const val = currentLang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    if (el.tagName === 'H1' || el.tagName === 'H2') {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+}
+
 function filterCards(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -387,6 +542,7 @@ function filterCards(cat, btn) {
     card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
   });
 }
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
